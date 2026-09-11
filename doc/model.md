@@ -5,7 +5,7 @@ terms appropriate for an educator. It is the companion to
 [implementation-notes.md](./implementation-notes.md), which targets developers.
 
 > **Replace this entire file when forking.** The template ships with no domain physics — only the
-> section structure below. Real OpenPhysics sims (e.g. Stern Gerlach, Light Propagation) fill each
+> section structure below. Real OpenLyceum sims (e.g. Stern Gerlach, Light Propagation) fill each
 > section with equations, ranges, and simplifications verified against their model code.
 
 ## Overview

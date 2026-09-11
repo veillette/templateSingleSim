@@ -96,14 +96,14 @@ Use `SIM_COMBO_BOX_OPTIONS` + `LIGHT_SURFACE_TEXT_FILL` for light control surfac
 
 ## Accessibility (reference implementation)
 
-The template is the **canonical OpenPhysics a11y reference**:
+The template is the **canonical OpenLyceum a11y reference**:
 
 - PDOM `accessibleName` on interactive nodes (prefer live `StringProperty`s).
 - `SimScreenSummaryContent` with a live `currentDetailsContent` `DerivedProperty` over model state.
 - Explicit `pdomOrder` + `SimKeyboardHelpContent`.
 - Strings under `a11y` in locale JSON → `StringManager.getA11yStrings()`.
 
-Full checklist: [Baton/ACCESSIBILITY.md](https://github.com/OpenPhysics/Baton/blob/main/ACCESSIBILITY.md).
+Full checklist: [Baton/ACCESSIBILITY.md](https://github.com/OpenLyceum/Baton/blob/main/ACCESSIBILITY.md).
 
 ## Testing (fleet layout — keep when forking)
 

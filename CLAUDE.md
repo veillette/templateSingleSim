@@ -1,11 +1,11 @@
 # CLAUDE.md — SceneryStack Template
 
-Sim-specific context for AI assistants. General SceneryStack guidance: [OpenPhysics/.github/CLAUDE.md](https://github.com/OpenPhysics/.github/blob/main/CLAUDE.md).
+Sim-specific context for AI assistants. General SceneryStack guidance: [OpenLyceum/.github/CLAUDE.md](https://github.com/OpenLyceum/.github/blob/main/CLAUDE.md).
 
 ## Project
 
 Reusable SceneryStack template (one or N screens) and **canonical accessibility reference** for
-OpenPhysics sims. Prefer `Baton/scripts/create-sim.sh` (or GitHub **Use this template** +
+OpenLyceum sims. Prefer `Baton/scripts/create-sim.sh` (or GitHub **Use this template** +
 `npm run rename` + `npm run scaffold-screens`) to fork it. For multi-screen sims, see
 [`doc/multi-screen.md`](doc/multi-screen.md).
 
@@ -89,12 +89,12 @@ flat buttons, editable fields) keeps readable contrast automatically.
 
 ## Accessibility
 
-This template is the **canonical accessibility reference** for OpenPhysics sims. It ships with
+This template is the **canonical accessibility reference** for OpenLyceum sims. It ships with
 the three required layers wired up: PDOM names, a `SimScreenSummaryContent`, and an explicit
 `pdomOrder` + `SimKeyboardHelpContent`. A11y strings live under the `a11y` key in each locale
 JSON, exposed via `StringManager.getA11yStrings()`. When building a real sim, make
 `currentDetailsContent` a live `DerivedProperty` over model state and add `accessibleName`s to
-every interactive node. Full convention and checklist: [Baton/ACCESSIBILITY.md](https://github.com/OpenPhysics/Baton/blob/main/ACCESSIBILITY.md).
+every interactive node. Full convention and checklist: [Baton/ACCESSIBILITY.md](https://github.com/OpenLyceum/Baton/blob/main/ACCESSIBILITY.md).
 
 ## Compliance carve-outs
 
