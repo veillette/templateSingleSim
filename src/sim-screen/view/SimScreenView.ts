@@ -25,6 +25,7 @@ import { Node, Rectangle, Text } from "scenerystack/scenery";
 import { ResetAllButton } from "scenerystack/scenery-phet";
 import { ScreenView, type ScreenViewOptions } from "scenerystack/sim";
 import { FLAT_RESET_ALL_BUTTON_OPTIONS } from "../../common/SimButtonOptions.js";
+import { StringManager } from "../../i18n/StringManager.js";
 import SimColors from "../../SimColors.js";
 import { SCREEN_VIEW_MARGIN } from "../../SimConstants.js";
 import type { SimModel } from "../model/SimModel.js";
@@ -56,7 +57,7 @@ export class SimScreenView extends ScreenView {
 
     // ── Placeholder label ─────────────────────────────────────────────────────
     // Replace this with your actual simulation content.
-    const placeholderText = new Text("SceneryStack Template", {
+    const placeholderText = new Text(StringManager.getInstance().getScreenNames().simStringProperty, {
       font: "bold 36px sans-serif",
       fill: SimColors.textColorProperty,
       center: this.layoutBounds.center,

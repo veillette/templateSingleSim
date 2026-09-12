@@ -1,7 +1,7 @@
 {
   "title": "Modèle de Simulation",
   "screens": {
-    "sim": "Sim"
+    "sim": "Simulation"
   },
   "a11y": {
     "screenSummary": {

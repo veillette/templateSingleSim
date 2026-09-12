@@ -3,7 +3,7 @@
  * scripts/rename-sim.ts
  *
  * Renames the sim template for a new simulation at the **sim** level (package id and
- * metadata, display name, Colors/Constants/Namespace/Panel/ButtonOptions/Preferences).
+ * metadata, display name, Colors/Constants/Namespace/Panel/ButtonOptions/ControlOptions/Preferences).
  * Screen packages stay as `src/sim-screen/` with `Sim*` class names so
  * `npm run scaffold-screens` can emit N fleet-named screen folders afterward.
  * No `Sim*` identifier should survive both steps.
@@ -51,13 +51,33 @@ if (!(newId && newName)) {
   process.exit(1);
 }
 
-// PascalCase class prefix: "Wave Interference" → "WaveInterference"
-const newPrefix =
-  getArg("--prefix") ??
-  newName
-    .split(/\s+/)
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(newId)) {
+  console.error(`Invalid --id ${JSON.stringify(newId)}; expected lowercase kebab-case.`);
+  process.exit(1);
+}
+
+/** Convert a display name to an ASCII PascalCase TypeScript identifier. */
+function displayNameToPrefix(displayName: string): string {
+  return displayName
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/['’]/g, "")
+    .split(/[^A-Za-z0-9]+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join("");
+}
+
+// PascalCase class prefix: "Wave Interference" → "WaveInterference",
+// "Faraday's Law" → "FaradaysLaw".
+const newPrefix = getArg("--prefix") ?? displayNameToPrefix(newName);
+
+if (!/^[A-Z][A-Za-z0-9]*$/.test(newPrefix)) {
+  console.error(
+    `Invalid class prefix ${JSON.stringify(newPrefix)}; use --prefix with a PascalCase identifier beginning with A-Z.`,
+  );
+  process.exit(1);
+}
 
 // camelCase prefix: "WaveInterference" → "waveInterference"
 const newCamel = newPrefix.charAt(0).toLowerCase() + newPrefix.slice(1);
@@ -92,16 +112,23 @@ const IDENTIFIER_REPLACEMENTS: ReadonlyArray<[string, string]> = [
   // Shared / preferences (not per-screen)
   ["SimPreferencesModel", `${newPrefix}PreferencesModel`],
   ["SimPreferencesNode", `${newPrefix}PreferencesNode`],
+  ["SimPreferenceStrings", `${newPrefix}PreferenceStrings`],
+  ["SimControlOptions", `${newPrefix}ControlOptions`],
   ["SimButtonOptions", `${newPrefix}ButtonOptions`],
   ["SimControlPanel", `${newPrefix}ControlPanel`],
+  ["SimA11yStrings", `${newPrefix}A11yStrings`],
   ["SimConstants", `${newPrefix}Constants`],
   ["SimColors", `${newPrefix}Colors`],
   ["SimNamespace", `${newPrefix}Namespace`],
+  ["SimPanelOptions", `${newPrefix}PanelOptions`],
   ["SimPanel", `${newPrefix}Panel`],
   // camelCase identifier
   ["simQueryParameters", `${newCamel}QueryParameters`],
   // SCREAMING_SNAKE identifier
+  ["SIM_NUMBER_CONTROL_OPTIONS", `${newSnake}_NUMBER_CONTROL_OPTIONS`],
   ["SIM_COMBO_BOX_OPTIONS", `${newSnake}_COMBO_BOX_OPTIONS`],
+  ["SIM_CHECKBOX_OPTIONS", `${newSnake}_CHECKBOX_OPTIONS`],
+  ["SIM_SLIDER_OPTIONS", `${newSnake}_SLIDER_OPTIONS`],
 ];
 
 /** Display / package strings: plain substring replace (longest first). */

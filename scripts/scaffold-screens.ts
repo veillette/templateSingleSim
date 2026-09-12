@@ -187,6 +187,7 @@ function transformPrototype(text: string, screen: ScreenSpec, simPrefix: string)
     ["SimScreen", `${screen.pascal}Screen`],
     ["SimModel", `${screen.pascal}Model`],
     ["getA11yStrings()", `get${screen.pascal}A11yStrings()`],
+    [".simStringProperty", `.${screen.key}StringProperty`],
   ];
   for (const [from, to] of pairs) {
     out = replaceAll(out, from, to);
@@ -196,12 +197,6 @@ function transformPrototype(text: string, screen: ScreenSpec, simPrefix: string)
   out = out.replace(
     / \* For multi-screen simulations, run `npm run scaffold-screens` \(preferred\) or\n \* duplicate this file \(e\.g\. IntroScreen\.ts, LabScreen\.ts\), add each screen to the\n \* screens array in src\/main\.ts, and put shared create\*Icon\(\) factories in\n \* src\/common\/\{SimName\}ScreenIcons\.ts \(see doc\/multi-screen\.md\)\.\n/,
     ` * Registered in the screens array in src/main.ts. Its home-screen and navigation-bar\n * icons come from create${screen.pascal}Icon() in src/common/${simPrefix}ScreenIcons.ts\n * (see doc/multi-screen.md).\n`,
-  );
-
-  // Placeholder label: prefer screen title over leftover sim title
-  out = out.replace(
-    /new Text\("([^"]*)", \{/,
-    `new Text("${screen.title.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}", {`,
   );
 
   // Inject screen icons into Screen class defaults when transforming *Screen.ts
@@ -647,6 +642,10 @@ function wireSharedModel(screens: ScreenSpec[]): void {
 
 function main(): void {
   const screenList = parseScreens(getArg("--screens"));
+  if (screenList.length === 0) {
+    console.error("At least one screen must be specified.");
+    process.exit(1);
+  }
   const prefix = detectPrefix(getArg("--prefix"));
   const sharedModel = hasFlag("--shared-model");
   const protoDir = findPrototypeDir();

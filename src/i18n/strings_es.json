@@ -1,7 +1,7 @@
 {
   "title": "Plantilla de Simulación",
   "screens": {
-    "sim": "Sim"
+    "sim": "Simulación"
   },
   "a11y": {
     "screenSummary": {
